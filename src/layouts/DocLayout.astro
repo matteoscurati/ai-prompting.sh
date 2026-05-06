@@ -1,0 +1,27 @@
+---
+// Layout for long-form MDX pages (/docs, /skill, /changelog).
+//
+// Setting `doc: true` makes BaseLayout add the `.doc` class to <main> AND
+// inject a <link rel="stylesheet" href="/prose.css"> into <head>. The
+// stylesheet is served from public/ so it's split from the main bundle
+// and only ships on pages that opt in.
+import BaseLayout from './BaseLayout.astro';
+
+interface PageMeta {
+  title?: string;
+  description?: string;
+  path?: string;
+}
+
+interface Props extends PageMeta {
+  /** Astro injects MDX frontmatter here when used as `layout:` in MDX. */
+  frontmatter?: PageMeta;
+}
+
+const merged = { ...Astro.props, ...Astro.props.frontmatter };
+const baseFrontmatter = { ...merged, doc: true };
+---
+
+<BaseLayout frontmatter={baseFrontmatter}>
+  <slot />
+</BaseLayout>

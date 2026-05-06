@@ -1,15 +1,32 @@
 ---
 import '../styles/global.css';
 
-interface Props {
-  title: string;
-  description: string;
+interface PageMeta {
+  title?: string;
+  description?: string;
   path?: string;
+  /** When true, applies `.doc` MDX prose styles to <main>. */
+  doc?: boolean;
 }
 
-const { title, description, path = '/' } = Astro.props;
-const canonical = new URL(path, Astro.site ?? 'https://aiprompting.sh').toString();
-const ogImage = new URL('/og-image.svg', Astro.site ?? 'https://aiprompting.sh').toString();
+interface Props extends PageMeta {
+  /** Astro injects MDX frontmatter here when this is used as `layout:` in MDX. */
+  frontmatter?: PageMeta;
+}
+
+// MDX pages pass values via `frontmatter`; .astro pages pass them as direct
+// props. Spread merges both with frontmatter taking precedence.
+const merged: PageMeta = { ...Astro.props, ...Astro.props.frontmatter };
+const {
+  title = 'aiprompting',
+  description = 'Improve any LLM prompt before it costs you tokens.',
+  path = '/',
+  doc: isDoc = false
+} = merged;
+
+const siteOrigin = Astro.site ?? new URL('https://aiprompting.sh');
+const canonical = new URL(path, siteOrigin).toString();
+const ogImage = new URL('/og-image.svg', siteOrigin).toString();
 
 const nav = [
   { href: '/docs', label: 'Docs' },
@@ -28,6 +45,8 @@ const nav = [
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {/* Prose stylesheet ships only on long-form pages (DocLayout sets isDoc). */}
+    {isDoc && <link rel="stylesheet" href="/prose.css" />}
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -87,7 +106,7 @@ const nav = [
       </nav>
     </header>
 
-    <main class="max-w-5xl mx-auto px-6 py-12">
+    <main class:list={['max-w-5xl mx-auto px-6 py-12', isDoc && 'doc']}>
       <slot />
     </main>
 
