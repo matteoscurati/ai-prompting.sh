@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/DocLayout.astro
-title: 'aiprompting Skill — install in Claude Code, Codex, Cursor'
-description: 'How to install aiprompting as an Agent Skill in Claude Code, Codex CLI, Cursor, Gemini CLI, and ~30 other agent hosts on the Agent Skills standard.'
+title: 'ai-prompting Skill — install in Claude Code, Codex, Cursor'
+description: 'How to install ai-prompting as an Agent Skill in Claude Code, Codex CLI, Cursor, Gemini CLI, and ~30 other agent hosts on the Agent Skills standard.'
 path: '/skill'
 ---
 
@@ -12,7 +12,7 @@ import AgentLogo from '../../components/AgentLogo.astro';
 
 A **Skill** is a self-contained instruction bundle that an agent host loads on demand. The
 Anthropic Agent Skills Open Standard (Dec 2025) defines a `SKILL.md` file with YAML frontmatter
-and a markdown body — that's all. `aiprompting` ships one.
+and a markdown body — that's all. `ai-prompting` ships one.
 
 When loaded, the host agent reads `SKILL.md`, optionally pulls in `references/*.md` if a deeper
 context is needed, and uses the agent's own language model to do the semantic rewrite. The CLI
@@ -26,22 +26,22 @@ Drop the `.claude/commands/improve.md` file (it ships in the npm package) into a
 slash command becomes available in that project automatically. No global install, no per-host
 copying.
 
-<CodeBlock code={`npm i aiprompting
-cp node_modules/aiprompting/.claude/commands/improve.md \\
-   .claude/commands/aiprompting:improve.md`} />
+<CodeBlock code={`npm i ai-prompting
+cp node_modules/ai-prompting/.claude/commands/improve.md \\
+   .claude/commands/ai-prompting:improve.md`} />
 
 ### B. As a per-user Skill (cross-host)
 
 The package ships a Node-only installer that detects which agent hosts are available and copies
 the slash command into each user-level command directory.
 
-<CodeBlock code={`npx aiprompting install-command`} />
+<CodeBlock code={`npx ai-prompting install-command`} />
 
 This will populate, for any host it finds:
 
-- `~/.claude/commands/aiprompting:improve.md` — Claude Code
-- `~/.codex/commands/aiprompting:improve.md` — OpenAI Codex CLI
-- `~/.cursor/commands/aiprompting-improve.md` — Cursor
+- `~/.claude/commands/ai-prompting:improve.md` — Claude Code
+- `~/.codex/commands/ai-prompting:improve.md` — OpenAI Codex CLI
+- `~/.cursor/commands/ai-prompting-improve.md` — Cursor
 
 Pass `--list` to see what would be touched, `--dry-run` to preview, `--force` to overwrite.
 
@@ -49,15 +49,15 @@ Pass `--list` to see what would be touched, `--dry-run` to preview, `--force` to
 
 Once installed, invoke the Skill with:
 
-<CodeBlock code={`/aiprompting:improve <your prompt here>`} />
+<CodeBlock code={`/ai-prompting:improve <your prompt here>`} />
 
 You can pass the same flags as the CLI:
 
-<CodeBlock code={`/aiprompting:improve write a launch email --mode diagnostic --audience "B2B founders"`} />
+<CodeBlock code={`/ai-prompting:improve write a launch email --mode diagnostic --audience "B2B founders"`} />
 
 Natural-language fallbacks work too:
 
-<CodeBlock code={`/aiprompting:improve scrivimi un'email di lancio in italiano, non chiedere`} />
+<CodeBlock code={`/ai-prompting:improve scrivimi un'email di lancio in italiano, non chiedere`} />
 
 ## Compatibility matrix
 
@@ -83,7 +83,7 @@ manual import — the package ships `agents/openai.yaml` for Apps-SDK style host
 
 1. The host loads `SKILL.md`. The frontmatter tells it when to trigger; the body explains the
    8-step decision flow.
-2. When the user invokes `/aiprompting:improve`, the host reads any flags, classifies the input,
+2. When the user invokes `/ai-prompting:improve`, the host reads any flags, classifies the input,
    and (if needed) loads `references/*.md` for deeper rules.
 3. The agent does the semantic rewrite using its own LLM. Padding is stripped, the canonical XML
    scaffold is filled in, assumptions are made explicit, and a 0–100 score is estimated.
@@ -96,7 +96,7 @@ the host's tool-allowlist (`allowed-tools: Read Bash`) is respected.
 
 If the slash command doesn't show up, run the doctor:
 
-<CodeBlock code={`aiprompting doctor`} />
+<CodeBlock code={`ai-prompting doctor`} />
 
 It checks the host's command directory, validates the `SKILL.md` frontmatter, and flags missing
 references.

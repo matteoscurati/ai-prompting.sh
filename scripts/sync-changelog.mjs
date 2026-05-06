@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Sync the package's CHANGELOG.md into the site's /changelog page.
 //
-// Reads:  ../aiprompting/CHANGELOG.md  (sibling repo, source of truth)
+// Reads:  ../ai-prompting/CHANGELOG.md  (sibling repo, source of truth)
 // Writes: src/pages/changelog/index.mdx (between the AUTOGEN markers)
 //
 // Usage:
@@ -14,7 +14,7 @@ import { dirname, resolve, relative } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..');
-const packageChangelog = resolve(repoRoot, '..', 'aiprompting', 'CHANGELOG.md');
+const packageChangelog = resolve(repoRoot, '..', 'ai-prompting', 'CHANGELOG.md');
 const siteChangelog = resolve(repoRoot, 'src', 'pages', 'changelog', 'index.mdx');
 
 // MDX rejects HTML comments, so we use the MDX expression syntax instead.

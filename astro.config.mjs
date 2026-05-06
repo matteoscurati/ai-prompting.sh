@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://aiprompting.sh',
+  site: 'https://ai-prompting.sh',
   integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()]

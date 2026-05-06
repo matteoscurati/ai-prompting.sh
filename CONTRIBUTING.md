@@ -1,15 +1,15 @@
 # Contributing
 
-This repo is the **website** for the `aiprompting` Skill + CLI. The Skill and CLI themselves live
-in [`matteoscurati/aiprompting`](https://github.com/matteoscurati/aiprompting).
+This repo is the **website** for the `ai-prompting` Skill + CLI. The Skill and CLI themselves live
+in [`matteoscurati/ai-prompting`](https://github.com/matteoscurati/ai-prompting).
 
 ## What belongs where
 
 | Issue / PR is about | Open it in |
 |---|---|
-| Bug in the CLI (`aiprompting improve`, `aiprompting doctor`) | [aiprompting](https://github.com/matteoscurati/aiprompting) |
-| Bug in the Skill (`/aiprompting:improve` slash command, SKILL.md) | [aiprompting](https://github.com/matteoscurati/aiprompting) |
-| New rubric category, new task type, new agent target | [aiprompting](https://github.com/matteoscurati/aiprompting) |
+| Bug in the CLI (`ai-prompting improve`, `ai-prompting doctor`) | [ai-prompting](https://github.com/matteoscurati/ai-prompting) |
+| Bug in the Skill (`/ai-prompting:improve` slash command, SKILL.md) | [ai-prompting](https://github.com/matteoscurati/ai-prompting) |
+| New rubric category, new task type, new agent target | [ai-prompting](https://github.com/matteoscurati/ai-prompting) |
 | Typo / broken link / wrong claim on the website | here |
 | New copy, new section, new before/after example on the website | here |
 | Performance regression on the website (Lighthouse, bundle size) | here |
@@ -19,8 +19,8 @@ in [`matteoscurati/aiprompting`](https://github.com/matteoscurati/aiprompting).
 Requires Node ≥ 20.
 
 ```bash
-git clone git@github.com:matteoscurati/aiprompting.sh.git
-cd aiprompting.sh
+git clone git@github.com:matteoscurati/ai-prompting.sh.git
+cd ai-prompting.sh
 npm install
 npm run dev
 ```
@@ -69,7 +69,7 @@ Examples on `/examples` are sourced from `src/pages/examples/index.astro`. Add a
 `npm run dev` and verify the new card renders with correct delta colors.
 
 If the example is also useful as a regression test, mirror it in the
-[main repo's `examples/`](https://github.com/matteoscurati/aiprompting/tree/main/aiprompting/examples).
+[main repo's `examples/`](https://github.com/matteoscurati/ai-prompting/tree/main/ai-prompting/examples).
 
 ## Adding a new agent to the compatibility matrix
 
@@ -80,12 +80,12 @@ then alphabetically.
 ## Updating the changelog
 
 The `/changelog` page is **synced from the package repo**, not edited here. Source of truth:
-[`aiprompting/CHANGELOG.md`](https://github.com/matteoscurati/aiprompting/blob/main/aiprompting/CHANGELOG.md).
+[`ai-prompting/CHANGELOG.md`](https://github.com/matteoscurati/ai-prompting/blob/main/ai-prompting/CHANGELOG.md).
 Workflow:
 
 1. Land the changelog entry in the package repo first.
 2. Run `npm run sync-changelog` from this site repo. The script reads
-   `../aiprompting/CHANGELOG.md` (sibling directory) and replaces the content
+   `../ai-prompting/CHANGELOG.md` (sibling directory) and replaces the content
    between the `{/* BEGIN AUTOGEN */}` / `{/* END AUTOGEN */}` markers in
    `src/pages/changelog/index.mdx`. (MDX rejects HTML comments, so the
    markers use MDX expression syntax.)

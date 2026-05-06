@@ -13,7 +13,7 @@ const steps = [
   {
     n: '02',
     title: 'Invoke it',
-    body: 'Type /aiprompting:improve <your prompt> in the host. Pass flags like --mode, --audience, --token-budget if you want.'
+    body: 'Type /ai-prompting:improve <your prompt> in the host. Pass flags like --mode, --audience, --token-budget if you want.'
   },
   {
     n: '03',
@@ -29,7 +29,7 @@ const steps = [
 ---
 
 <BaseLayout
-  title="aiprompting — improve any LLM prompt inside your agent"
+  title="ai-prompting — improve any LLM prompt inside your agent"
   description="Installable Skill for Claude Code, Codex CLI, and Cursor that drives your agent's LLM through a structured 8-step prompt-improvement procedure."
 >
   <section class="relative isolate py-20 md:py-28 -mt-12 px-6 -mx-6">
@@ -51,7 +51,7 @@ const steps = [
     </p>
 
     <div class="mt-10 flex flex-col sm:flex-row gap-3 max-w-md">
-      <CodeBlock code="npm i -g aiprompting" />
+      <CodeBlock code="npm i -g ai-prompting" />
     </div>
 
     <div class="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-[var(--color-muted)]">
@@ -61,7 +61,7 @@ const steps = [
       <span class="text-[var(--color-border)]">·</span>
       <a href="/docs" class="hover:text-[var(--color-fg)] transition-colors">Docs →</a>
       <span class="text-[var(--color-border)]">·</span>
-      <a href="https://github.com/matteoscurati/aiprompting" class="hover:text-[var(--color-fg)] transition-colors" rel="noopener">GitHub →</a>
+      <a href="https://github.com/matteoscurati/ai-prompting" class="hover:text-[var(--color-fg)] transition-colors" rel="noopener">GitHub →</a>
     </div>
   </section>
 
@@ -86,7 +86,7 @@ const steps = [
   <section class="py-12 border-t border-[var(--color-border)]">
     <div class="flex items-baseline justify-between mb-6 flex-wrap gap-3">
       <h2 class="text-sm uppercase tracking-wide text-[var(--color-muted)]">Same 5-word ask, run through the Skill</h2>
-      <span class="text-xs font-mono text-[var(--color-muted)]">/aiprompting:improve "..."</span>
+      <span class="text-xs font-mono text-[var(--color-muted)]">/ai-prompting:improve "..."</span>
     </div>
     <BeforeAfter
       before={HERO_EXAMPLE.before}
@@ -144,9 +144,9 @@ const steps = [
       Skill loose.
     </p>
     <div class="space-y-3">
-      <CodeBlock code={`npx aiprompting improve --prompt "help me write something" --mode diagnostic`} />
-      <CodeBlock code={`echo "help me debug this" | npx aiprompting improve --target claude`} />
-      <CodeBlock code={`npx aiprompting improve --file ./prompt.md --mode compact --token-budget minimal`} />
+      <CodeBlock code={`npx ai-prompting improve --prompt "help me write something" --mode diagnostic`} />
+      <CodeBlock code={`echo "help me debug this" | npx ai-prompting improve --target claude`} />
+      <CodeBlock code={`npx ai-prompting improve --file ./prompt.md --mode compact --token-budget minimal`} />
     </div>
     <p class="mt-4 text-sm text-[var(--color-muted)] max-w-2xl">
       The CLI&rsquo;s output is a rule-based baseline — adequate for regression tests, not as rich
@@ -157,7 +157,7 @@ const steps = [
   <section class="py-16 border-t border-[var(--color-border)]">
     <h2 class="text-2xl font-semibold mb-2">Not what you think it is</h2>
     <p class="text-[var(--color-muted)] mb-6 max-w-2xl">
-      aiprompting runs <em>before</em> your agent commits to an action. It is not observability,
+      ai-prompting runs <em>before</em> your agent commits to an action. It is not observability,
       not a prompt registry, not a chat wrapper.
     </p>
     <div class="grid md:grid-cols-2 gap-px bg-[var(--color-border)] rounded-lg overflow-hidden border border-[var(--color-border)]">

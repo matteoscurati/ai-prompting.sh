@@ -18,13 +18,13 @@ interface Props extends PageMeta {
 // props. Spread merges both with frontmatter taking precedence.
 const merged: PageMeta = { ...Astro.props, ...Astro.props.frontmatter };
 const {
-  title = 'aiprompting',
+  title = 'ai-prompting',
   description = 'Improve any LLM prompt before it costs you tokens.',
   path = '/',
   doc: isDoc = false
 } = merged;
 
-const siteOrigin = Astro.site ?? new URL('https://aiprompting.sh');
+const siteOrigin = Astro.site ?? new URL('https://ai-prompting.sh');
 const canonical = new URL(path, siteOrigin).toString();
 // PNG (not SVG) for the OG image: Twitter/X rejects SVG; LinkedIn/Facebook
 // have inconsistent SVG rendering. The PNG is regenerated from the SVG by
@@ -56,7 +56,7 @@ const nav = [
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:site_name" content="aiprompting" />
+    <meta property="og:site_name" content="ai-prompting" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -64,13 +64,13 @@ const nav = [
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="aiprompting — Improve any prompt. Inside your agent." />
+    <meta property="og:image:alt" content="ai-prompting — Improve any prompt. Inside your agent." />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content="aiprompting — Improve any prompt. Inside your agent." />
+    <meta name="twitter:image:alt" content="ai-prompting — Improve any prompt. Inside your agent." />
 
     <script
       is:inline
@@ -78,7 +78,7 @@ const nav = [
       set:html={JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
-        name: 'aiprompting',
+        name: 'ai-prompting',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Cross-platform',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -98,7 +98,7 @@ const nav = [
               {
                 '@type': 'ListItem',
                 position: 1,
-                name: 'aiprompting',
+                name: 'ai-prompting',
                 item: siteOrigin.href
               },
               {
@@ -120,7 +120,7 @@ const nav = [
       <nav class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
         <a href="/" class="font-mono font-semibold tracking-tight flex items-center gap-2">
           <span class="text-[var(--color-accent)]">a</span>
-          <span>aiprompting</span>
+          <span>ai-prompting</span>
         </a>
         <ul class="flex gap-6 text-sm">
           {nav.map((item) => (
@@ -135,7 +135,7 @@ const nav = [
           ))}
           <li>
             <a
-              href="https://github.com/matteoscurati/aiprompting"
+              href="https://github.com/matteoscurati/ai-prompting"
               class="text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors"
               rel="noopener"
             >

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/DocLayout.astro
-title: 'aiprompting docs — CLI flags, library API, 100-point rubric'
-description: 'Documentation for aiprompting: quickstart, CLI flag reference, TypeScript library API, output modes, and the 9-category 100-point heuristic rubric.'
+title: 'ai-prompting docs — CLI flags, library API, 100-point rubric'
+description: 'Documentation for ai-prompting: quickstart, CLI flag reference, TypeScript library API, output modes, and the 9-category 100-point heuristic rubric.'
 path: '/docs'
 ---
 
@@ -9,16 +9,16 @@ import CodeBlock from '../../components/CodeBlock.astro';
 
 # Documentation
 
-`aiprompting` ships in two layers: a **Skill** consumed by any compatible agent host, and a
+`ai-prompting` ships in two layers: a **Skill** consumed by any compatible agent host, and a
 deterministic **CLI** you can run locally or in CI. They are independent — pick whichever fits.
 
 ## Quickstart (CLI)
 
-<CodeBlock code="npm i -g aiprompting" />
+<CodeBlock code="npm i -g ai-prompting" />
 
 Once installed:
 
-<CodeBlock code={`aiprompting improve --prompt "help me write a release note"`} />
+<CodeBlock code={`ai-prompting improve --prompt "help me write a release note"`} />
 
 No flags, no signup, no API keys. The CLI reads stdin if you don't pass `--prompt` or `--file`,
 which means you can pipe anything into it.
@@ -44,7 +44,7 @@ which means you can pipe anything into it.
 ## Library API
 
 ```ts
-import { improvePrompt, scorePrompt } from 'aiprompting';
+import { improvePrompt, scorePrompt } from 'ai-prompting';
 
 const result = improvePrompt({
   originalPrompt: 'help me write a release note',
@@ -82,13 +82,13 @@ Nine heuristic categories. Numbers are estimates, not measured gains.
 | Evaluation criteria | 5 | Acceptance bullets, verifiable success conditions. |
 
 Full breakdown lives in
-[`references/prompt-quality-rubric.md`](https://github.com/matteoscurati/aiprompting/blob/main/aiprompting/references/prompt-quality-rubric.md).
+[`references/prompt-quality-rubric.md`](https://github.com/matteoscurati/ai-prompting/blob/main/ai-prompting/references/prompt-quality-rubric.md).
 
 ## Health check
 
 If anything looks off, run:
 
-<CodeBlock code="aiprompting doctor" />
+<CodeBlock code="ai-prompting doctor" />
 
 You should see `Status: OK` plus seven green checks. If you see a red mark, the message tells you
 how to fix it.

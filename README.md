@@ -1,6 +1,6 @@
-# aiprompting.sh
+# ai-prompting.sh
 
-Marketing + docs site for the [`aiprompting`](https://github.com/matteoscurati/aiprompting) Skill
+Marketing + docs site for the [`ai-prompting`](https://github.com/matteoscurati/ai-prompting) Skill
 and CLI.
 
 Built with **Astro 5** + **Tailwind v4** + **TypeScript** + **MDX**. Static-only output. No
@@ -84,11 +84,11 @@ Node version and applies sensible cache rules out of the box.
 
 1. **Push the repo to GitHub** (one-time):
    ```bash
-   gh repo create matteoscurati/aiprompting.sh --public --source=. --push
+   gh repo create matteoscurati/ai-prompting.sh --public --source=. --push
    ```
 2. **Create a Cloudflare Pages project**:
    dash.cloudflare.com → Workers & Pages → Create → Pages → Connect to Git →
-   pick `matteoscurati/aiprompting.sh`.
+   pick `matteoscurati/ai-prompting.sh`.
 3. **Build settings** (Cloudflare auto-detects most of these):
    - Framework preset: **Astro**
    - Build command: `npm run build`
@@ -98,8 +98,8 @@ Node version and applies sensible cache rules out of the box.
 4. **Save and Deploy.** The first build runs `npm ci && npm run build` and
    takes ~30s. Every subsequent push to `main` auto-deploys; PRs get preview
    URLs.
-5. **Custom domain**: Project → Custom domains → Set up. Add `aiprompting.sh`
-   plus the `www.aiprompting.sh` redirect. SSL is automatic.
+5. **Custom domain**: Project → Custom domains → Set up. Add `ai-prompting.sh`
+   plus the `www.ai-prompting.sh` redirect. SSL is automatic.
 
 ### Other hosts (also work)
 
@@ -127,5 +127,5 @@ Code: [MIT](./LICENSE). Content (prose, diagrams, examples): CC BY 4.0.
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md). The Skill itself lives in
-[`matteoscurati/aiprompting`](https://github.com/matteoscurati/aiprompting) — bug reports about
+[`matteoscurati/ai-prompting`](https://github.com/matteoscurati/ai-prompting) — bug reports about
 the Skill or CLI go there. Issues about the website (copy, layout, broken links) go here.

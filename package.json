@@ -1,9 +1,9 @@
 {
-  "name": "aiprompting.sh",
+  "name": "ai-prompting.sh",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Marketing + docs site for the aiprompting Skill and CLI.",
+  "description": "Marketing + docs site for the ai-prompting Skill and CLI.",
   "scripts": {
     "dev": "astro dev",
     "prebuild": "node scripts/sync-changelog.mjs --check && node scripts/generate-og-image.mjs",
