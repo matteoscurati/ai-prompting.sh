@@ -1,4 +1,6 @@
 ---
+type Tone = 'good' | 'mid' | 'low';
+
 interface Props {
   score: number;
   delta?: number;
@@ -6,11 +8,11 @@ interface Props {
 }
 const { score, delta, label } = Astro.props;
 
-const tone = score >= 80 ? 'good' : score >= 50 ? 'mid' : 'low';
-const toneClass: Record<string, string> = {
-  good: 'border-[var(--color-accent)] text-[var(--color-accent)]',
-  mid: 'border-yellow-300/50 text-yellow-300',
-  low: 'border-red-400/50 text-red-400'
+const tone: Tone = score >= 80 ? 'good' : score >= 50 ? 'mid' : 'low';
+const toneClass: Record<Tone, string> = {
+  good: 'border-[var(--color-tone-good)]/50 text-[var(--color-tone-good)]',
+  mid: 'border-[var(--color-tone-mid)]/50 text-[var(--color-tone-mid)]',
+  low: 'border-[var(--color-tone-low)]/50 text-[var(--color-tone-low)]'
 };
 ---
 
@@ -19,7 +21,5 @@ const toneClass: Record<string, string> = {
 >
   {label && <span class="opacity-60">{label}</span>}
   <span>{score}/100</span>
-  {delta !== undefined && delta > 0 && (
-    <span class="opacity-80">+{delta}</span>
-  )}
+  {delta !== undefined && delta > 0 && <span class="opacity-80">+{delta}</span>}
 </span>

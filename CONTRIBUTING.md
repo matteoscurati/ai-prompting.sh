@@ -76,3 +76,24 @@ If the example is also useful as a regression test, mirror it in the
 Edit `src/pages/skill/index.mdx`. Add an `<AgentLogo>` with `name`, `supported`
 (`native` / `adapter` / `none`), and an optional `note`. Keep entries sorted by support level,
 then alphabetically.
+
+## Updating the changelog
+
+The `/changelog` page is **synced from the package repo**, not edited here. Source of truth:
+[`aiprompting/CHANGELOG.md`](https://github.com/matteoscurati/aiprompting/blob/main/aiprompting/CHANGELOG.md).
+Workflow:
+
+1. Land the changelog entry in the package repo first.
+2. Run `npm run sync-changelog` from this site repo. The script reads
+   `../aiprompting/CHANGELOG.md` (sibling directory) and replaces the content
+   between the `{/* BEGIN AUTOGEN */}` / `{/* END AUTOGEN */}` markers in
+   `src/pages/changelog/index.mdx`. (MDX rejects HTML comments, so the
+   markers use MDX expression syntax.)
+3. Commit the resulting MDX change.
+
+The intro paragraph above the AUTOGEN block stays manual; everything below the
+markers is regenerated.
+
+CI safety: `npm run build` runs `sync-changelog --check` first and fails if the
+two are out of sync. If CI clones the site without the sibling package, the check
+is skipped silently — drift detection is a local convenience, not a hard gate.
