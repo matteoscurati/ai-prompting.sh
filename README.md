@@ -74,18 +74,42 @@ Prettier with `prettier-plugin-astro`.
 
 ## Deploy
 
-The site is a static export. The recommended path is Vercel via the GitHub integration:
+The site is a static export. **Cloudflare Pages** is the recommended host:
+unlimited bandwidth on the free tier, edge CDN with 320+ POPs, fast builds,
+preview deploys per branch, and cookie-less analytics if you want them. The
+repo ships `.nvmrc` and `public/_headers` so the platform picks the right
+Node version and applies sensible cache rules out of the box.
 
-1. Create the GitHub repo (`gh repo create matteoscurati/aiprompting.sh --public --source=.`).
-2. Connect it to Vercel. Detect framework: Astro. Build command: `npm run build`. Output: `dist`.
-3. Add `aiprompting.sh` (or your domain of choice) under Project Settings → Domains.
+### Cloudflare Pages — first-time setup
 
-For other hosts:
+1. **Push the repo to GitHub** (one-time):
+   ```bash
+   gh repo create matteoscurati/aiprompting.sh --public --source=. --push
+   ```
+2. **Create a Cloudflare Pages project**:
+   dash.cloudflare.com → Workers & Pages → Create → Pages → Connect to Git →
+   pick `matteoscurati/aiprompting.sh`.
+3. **Build settings** (Cloudflare auto-detects most of these):
+   - Framework preset: **Astro**
+   - Build command: `npm run build`
+   - Build output directory: `dist`
+   - Root directory: leave empty
+   - Environment variables: none required
+4. **Save and Deploy.** The first build runs `npm ci && npm run build` and
+   takes ~30s. Every subsequent push to `main` auto-deploys; PRs get preview
+   URLs.
+5. **Custom domain**: Project → Custom domains → Set up. Add `aiprompting.sh`
+   plus the `www.aiprompting.sh` redirect. SSL is automatic.
 
-- **Netlify**: same build/output. Drop a `netlify.toml` if you want CI config in-repo.
-- **GitHub Pages**: enable Pages on the repo, set source to `gh-pages` branch, add a deploy step
-  to the CI workflow that pushes `dist/` to `gh-pages`.
-- **Cloudflare Pages**: detect framework Astro, no further config needed.
+### Other hosts (also work)
+
+- **Vercel**: framework detection picks Astro automatically; same build/output;
+  100GB bandwidth on free tier (lower than Cloudflare).
+- **Netlify**: same build/output; drop a `netlify.toml` if you want CI config
+  in-repo.
+- **GitHub Pages**: enable Pages on the repo, set source to a `gh-pages`
+  branch, add a deploy job to `.github/workflows/ci.yml` that pushes `dist/`
+  there. No automatic preview branches.
 
 ## Performance budget
 
