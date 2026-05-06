@@ -6,6 +6,53 @@ export type Example = {
   scoreAfter: number;
 };
 
+// Hero example shown on the home page. Represents the SKILL output —
+// the rewrite produced by your host agent's LLM after applying the
+// 8-step procedure. Compare with EXAMPLES[0], which has the same
+// `before` string but shows the deterministic CLI baseline output:
+// same input, two layers, very different richness.
+export const HERO_EXAMPLE: Example = {
+  label: 'Rewritten by your agent',
+  before: 'help me write something good',
+  after: `<role>Senior editor for developer-facing technical content.</role>
+
+<objective>
+Produce a single-thesis piece (200–300 words) the user can ship as a
+blog post, a doc page, or a release-note paragraph.
+</objective>
+
+<context>
+The original request is underspecified. Working assumptions —
+confirm or correct any before I draft:
+- Audience: developers / founders / technical readers.
+- Genre: explanatory or persuasive, not fiction.
+- Length: 200–300 words.
+- Voice: direct, plain English, no marketing hype.
+- Topic: pending — if it isn't clear from prior context I'll ask
+  one focused multiple-choice question (max 4 options).
+</context>
+
+<task>
+1. If a topic exists in context, draft on that. Otherwise ask the MCQ.
+2. Open with a concrete claim, not a hook.
+3. Each paragraph advances the argument; cut filler.
+4. Close with a takeaway or a next action.
+</task>
+
+<constraints>
+- Banned phrasings: "In today's fast-paced world…", "revolutionary",
+  "AI-powered", "supercharge", "blazing-fast".
+- Cite factual claims; label opinions as such.
+- Match the voice of any sample writing the user provides.
+</constraints>
+
+<output_format>
+Markdown: H2 title, 3–5 paragraphs, one optional pull-quote.
+</output_format>`,
+  scoreBefore: 30,
+  scoreAfter: 88
+};
+
 export const EXAMPLES: Example[] = [
   {
     label: 'Writing — vague request',

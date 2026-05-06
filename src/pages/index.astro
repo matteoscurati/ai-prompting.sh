@@ -2,116 +2,172 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BeforeAfter from '../components/BeforeAfter.astro';
 import CodeBlock from '../components/CodeBlock.astro';
-import { EXAMPLES } from '../data/examples';
+import { HERO_EXAMPLE } from '../data/examples';
 
-const hero = EXAMPLES[0];
+const steps = [
+  {
+    n: '01',
+    title: 'Install once',
+    body: 'Drop the Skill into Claude Code, Codex CLI, Cursor, or any of ~30 hosts on the Agent Skills standard.'
+  },
+  {
+    n: '02',
+    title: 'Invoke it',
+    body: 'Type /aiprompting:improve <your prompt> in the host. Pass flags like --mode, --audience, --token-budget if you want.'
+  },
+  {
+    n: '03',
+    title: 'Your agent reads SKILL.md',
+    body: 'The host loads the 8-step procedure plus references on demand. No network call to us, no API key.'
+  },
+  {
+    n: '04',
+    title: 'Your agent rewrites',
+    body: "The host's own LLM (Claude, GPT, Gemini, …) runs the procedure: strips padding, scaffolds structure, surfaces assumptions, scores quality."
+  }
+];
 ---
 
 <BaseLayout
-  title="aiprompting — improve any LLM prompt"
-  description="A deterministic CLI and an installable Skill that scaffold, score, and strip padding from any LLM prompt. Zero runtime dependencies, no API keys, works offline."
+  title="aiprompting — improve any LLM prompt inside your agent"
+  description="An installable Skill that drives your agent's own LLM (Claude, GPT, Gemini) through a structured 8-step procedure to strip padding, scaffold structure, surface assumptions, and score prompt quality. No service, no API key."
 >
   <section class="relative isolate py-20 md:py-28 -mt-12 px-6 -mx-6">
     <div class="absolute inset-0 -z-10 grid-bg opacity-50 pointer-events-none"></div>
     <div class="inline-flex items-center gap-2 text-xs font-mono text-[var(--color-muted)] border border-[var(--color-border)] rounded-full px-3 py-1 mb-8">
       <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]"></span>
-      <span>v0.1.4 · zero runtime deps</span>
+      <span>v0.1.4 · Agent Skill for Claude Code · Codex CLI · Cursor · Gemini CLI</span>
     </div>
     <h1 class="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05] max-w-3xl">
       Improve any prompt.
       <br />
-      <span class="text-[var(--color-muted)]">Before it costs you tokens.</span>
+      <span class="text-[var(--color-muted)]">Inside your agent.</span>
     </h1>
     <p class="mt-6 max-w-2xl text-lg text-[var(--color-muted)]">
-      A deterministic CLI and an installable Skill that scaffold, score, and strip padding from
-      any LLM prompt. No API keys. No round-trips. Works offline.
+      An installable <a href="/skill" class="text-[var(--color-fg)] underline decoration-[var(--color-border)] hover:decoration-[var(--color-accent)]">Skill</a>
+      that drives your agent&rsquo;s own LLM through a structured 8-step procedure: strip padding,
+      scaffold the prompt, surface assumptions, score quality. No service to sign up for, no API key,
+      nothing to host. We ship the recipe; your host LLM does the work.
     </p>
 
     <div class="mt-10 flex flex-col sm:flex-row gap-3 max-w-md">
       <CodeBlock code="npm i -g aiprompting" />
     </div>
 
-    <div class="mt-4 flex gap-4 text-sm text-[var(--color-muted)]">
-      <a href="/docs" class="hover:text-[var(--color-fg)] transition-colors">Read the docs →</a>
+    <div class="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-[var(--color-muted)]">
+      <a href="/skill" class="hover:text-[var(--color-fg)] transition-colors">Install in your host →</a>
       <span class="text-[var(--color-border)]">·</span>
-      <a href="/skill" class="hover:text-[var(--color-fg)] transition-colors">Install as Skill →</a>
+      <a href="#how-it-works" class="hover:text-[var(--color-fg)] transition-colors">How it works →</a>
+      <span class="text-[var(--color-border)]">·</span>
+      <a href="/docs" class="hover:text-[var(--color-fg)] transition-colors">Docs →</a>
       <span class="text-[var(--color-border)]">·</span>
       <a href="https://github.com/matteoscurati/aiprompting" class="hover:text-[var(--color-fg)] transition-colors" rel="noopener">GitHub →</a>
     </div>
   </section>
 
+  <section id="how-it-works" class="py-16 border-t border-[var(--color-border)]">
+    <h2 class="text-sm uppercase tracking-wide text-[var(--color-muted)] mb-8">How the Skill works</h2>
+    <ol class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 list-none p-0">
+      {steps.map((step) => (
+        <li class="space-y-2">
+          <span class="font-mono text-xs text-[var(--color-accent)]">{step.n}</span>
+          <h3 class="font-semibold text-base">{step.title}</h3>
+          <p class="text-sm text-[var(--color-muted)] leading-relaxed">{step.body}</p>
+        </li>
+      ))}
+    </ol>
+    <p class="mt-8 text-sm text-[var(--color-muted)] max-w-2xl">
+      The Skill is pure Markdown plus a few referenced files. Your agent loads it once and uses
+      its own model for the rewrite — Claude inside Claude Code, GPT inside Codex CLI, Gemini
+      inside Gemini CLI, and so on. No third-party service sits between you and your model.
+    </p>
+  </section>
+
   <section class="py-12 border-t border-[var(--color-border)]">
-    <div class="flex items-baseline justify-between mb-6">
-      <h2 class="text-sm uppercase tracking-wide text-[var(--color-muted)]">A 5-word prompt → a 50-line scaffold</h2>
-      <span class="text-xs font-mono text-[var(--color-muted)]">npx aiprompting improve --prompt "..."</span>
+    <div class="flex items-baseline justify-between mb-6 flex-wrap gap-3">
+      <h2 class="text-sm uppercase tracking-wide text-[var(--color-muted)]">Same 5-word ask, run through the Skill</h2>
+      <span class="text-xs font-mono text-[var(--color-muted)]">/aiprompting:improve "..."</span>
     </div>
     <BeforeAfter
-      before={hero.before}
-      after={hero.after}
-      scoreBefore={hero.scoreBefore}
-      scoreAfter={hero.scoreAfter}
+      before={HERO_EXAMPLE.before}
+      after={HERO_EXAMPLE.after}
+      scoreBefore={HERO_EXAMPLE.scoreBefore}
+      scoreAfter={HERO_EXAMPLE.scoreAfter}
     />
+    <p class="mt-4 text-sm text-[var(--color-muted)] max-w-2xl">
+      Output above was rewritten by an agent&rsquo;s LLM driven by the Skill — assumptions are
+      domain-aware, constraints are stylistic, banned phrasings are explicit. The
+      <a href="/examples" class="underline decoration-[var(--color-border)] hover:decoration-[var(--color-accent)]">/examples page</a>
+      shows the same input run through the deterministic CLI for comparison.
+    </p>
   </section>
 
   <section class="py-16 grid md:grid-cols-3 gap-8 border-t border-[var(--color-border)]">
     <div>
       <h3 class="font-semibold mb-3 flex items-center gap-2">
         <span class="text-[var(--color-accent)] font-mono">01</span>
-        Deterministic
+        Universal
       </h3>
       <p class="text-sm text-[var(--color-muted)] leading-relaxed">
-        Same input → same output. No LLM round-trips, no API keys, no surprises in CI. Drop it in a
-        pre-commit hook or a CI gate without spending a cent.
+        Native in Claude Code, Codex CLI, Cursor, Gemini CLI, JetBrains Junie, Block Goose, AWS
+        Kiro — ~30 agent hosts that adopted the Agent Skills standard. One file ships everywhere.
       </p>
     </div>
     <div>
       <h3 class="font-semibold mb-3 flex items-center gap-2">
         <span class="text-[var(--color-accent)] font-mono">02</span>
-        Universal
+        Honest
       </h3>
       <p class="text-sm text-[var(--color-muted)] leading-relaxed">
-        Works as a CLI, a TypeScript library, and an installable Skill in Claude Code, Codex CLI,
-        Cursor, Gemini CLI, and ~30 other agent hosts that adopted the Agent Skills standard.
+        Heuristic 0–100 score with per-category rationale. No "AI-powered" hype, no measured-gain
+        claims without test data. Numbers are estimates and we say so on every page.
       </p>
     </div>
     <div>
       <h3 class="font-semibold mb-3 flex items-center gap-2">
         <span class="text-[var(--color-accent)] font-mono">03</span>
-        Honest
+        Open
       </h3>
       <p class="text-sm text-[var(--color-muted)] leading-relaxed">
-        Heuristic 0–100 score with per-category rationale. No "AI-powered" hype, no measured-gain
-        claims without test data. The numbers are estimates and we say so.
+        MIT license. Zero runtime dependencies. The complete TypeScript core fits in
+        ~700 lines — auditable in 20 minutes if you want to know what you&rsquo;re shipping.
       </p>
     </div>
   </section>
 
   <section class="py-16 border-t border-[var(--color-border)]">
-    <h2 class="text-2xl font-semibold mb-2">Try it now</h2>
+    <h2 class="text-2xl font-semibold mb-2">Or save tokens entirely with the CLI</h2>
     <p class="text-[var(--color-muted)] mb-6 max-w-2xl">
-      No install, no signup. Pipe stdin, read a file, or pass <code class="font-mono text-[var(--color-fg)]">--prompt</code> directly.
+      The same procedure also ships as a Node CLI. No LLM call, no API key, no tokens spent —
+      rule-based scaffolding plus heuristic scoring plus padding strip. Useful as a CI gate, a
+      pre-commit hook, a batch processor, or a fast deterministic baseline before you turn the
+      Skill loose.
     </p>
     <div class="space-y-3">
       <CodeBlock code={`npx aiprompting improve --prompt "help me write something" --mode diagnostic`} />
       <CodeBlock code={`echo "help me debug this" | npx aiprompting improve --target claude`} />
       <CodeBlock code={`npx aiprompting improve --file ./prompt.md --mode compact --token-budget minimal`} />
     </div>
+    <p class="mt-4 text-sm text-[var(--color-muted)] max-w-2xl">
+      The CLI&rsquo;s output is a rule-based baseline — adequate for regression tests, not as rich
+      as what an LLM produces through the Skill. Pick the layer that matches your need.
+    </p>
   </section>
 
   <section class="py-16 border-t border-[var(--color-border)]">
     <h2 class="text-2xl font-semibold mb-2">Not what you think it is</h2>
     <p class="text-[var(--color-muted)] mb-6 max-w-2xl">
-      aiprompting runs <em>before</em> the LLM. It is not observability, not a prompt registry, not
-      a chat wrapper.
+      aiprompting runs <em>before</em> your agent commits to an action. It is not observability,
+      not a prompt registry, not a chat wrapper.
     </p>
     <div class="grid md:grid-cols-2 gap-px bg-[var(--color-border)] rounded-lg overflow-hidden border border-[var(--color-border)]">
       <div class="bg-[var(--color-subtle)] p-5">
         <h3 class="font-mono text-xs uppercase tracking-wide text-[var(--color-muted)] mb-3">What it is</h3>
         <ul class="space-y-2 text-sm">
-          <li class="flex gap-2"><span class="text-[var(--color-accent)]">→</span> A deterministic prompt linter + scaffolder.</li>
-          <li class="flex gap-2"><span class="text-[var(--color-accent)]">→</span> A 0–100 quality estimate with rationale.</li>
           <li class="flex gap-2"><span class="text-[var(--color-accent)]">→</span> A Skill that runs inside any compatible agent.</li>
-          <li class="flex gap-2"><span class="text-[var(--color-accent)]">→</span> A CI gate for prompt regressions.</li>
+          <li class="flex gap-2"><span class="text-[var(--color-accent)]">→</span> A deterministic CLI for CI / pre-commit gates.</li>
+          <li class="flex gap-2"><span class="text-[var(--color-accent)]">→</span> A 0–100 quality estimate with rationale.</li>
+          <li class="flex gap-2"><span class="text-[var(--color-accent)]">→</span> An audit-friendly TypeScript library.</li>
         </ul>
       </div>
       <div class="bg-[var(--color-subtle)] p-5">
