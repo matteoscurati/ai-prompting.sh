@@ -1,0 +1,25 @@
+---
+interface Props {
+  score: number;
+  delta?: number;
+  label?: string;
+}
+const { score, delta, label } = Astro.props;
+
+const tone = score >= 80 ? 'good' : score >= 50 ? 'mid' : 'low';
+const toneClass: Record<string, string> = {
+  good: 'border-[var(--color-accent)] text-[var(--color-accent)]',
+  mid: 'border-yellow-300/50 text-yellow-300',
+  low: 'border-red-400/50 text-red-400'
+};
+---
+
+<span
+  class={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded font-mono text-xs border ${toneClass[tone]}`}
+>
+  {label && <span class="opacity-60">{label}</span>}
+  <span>{score}/100</span>
+  {delta !== undefined && delta > 0 && (
+    <span class="opacity-80">+{delta}</span>
+  )}
+</span>

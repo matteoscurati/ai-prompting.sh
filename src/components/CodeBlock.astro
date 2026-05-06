@@ -1,0 +1,41 @@
+---
+interface Props {
+  code: string;
+  lang?: string;
+  inline?: boolean;
+}
+const { code, lang = 'bash', inline = false } = Astro.props;
+---
+
+<div class={`relative group ${inline ? 'inline-flex w-full' : 'block'}`}>
+  <pre
+    class="bg-[var(--color-subtle)] border border-[var(--color-border)] rounded-md px-4 py-3 overflow-x-auto text-sm leading-relaxed w-full"
+  ><code data-lang={lang} class="font-mono">{code}</code></pre>
+  <button
+    type="button"
+    class="absolute top-2 right-2 text-xs px-2 py-1 bg-[var(--color-bg)] border border-[var(--color-border)] rounded font-mono opacity-0 group-hover:opacity-100 focus:opacity-100 transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+    data-copy={code}
+    aria-label="Copy code to clipboard"
+  >
+    Copy
+  </button>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('button[data-copy]');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = btn.getAttribute('data-copy') ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+        const original = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(() => {
+          btn.textContent = original;
+        }, 1200);
+      } catch {
+        btn.textContent = 'Press Ctrl+C';
+      }
+    });
+  });
+</script>

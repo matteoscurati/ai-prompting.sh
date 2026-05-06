@@ -1,0 +1,28 @@
+{
+  "name": "aiprompting.sh",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Marketing + docs site for the aiprompting Skill and CLI.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.0.0",
+    "@astrojs/sitemap": "^3.2.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "astro": "^5.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "prettier": "^3.3.0",
+    "prettier-plugin-astro": "^0.14.0"
+  }
+}

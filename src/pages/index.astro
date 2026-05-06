@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+
+const heroBefore = `help me write something good`;
+
+const heroAfter = `<role>
+Senior editor focused on clarity, rhythm, and audience fit.
+</role>
+
+<objective>
+Write something good
+</objective>
+
+<context>
+[ASSUMPTION: no additional context provided;
+the model should flag any load-bearing assumptions]
+</context>
+
+<task>
+help me write something good
+</task>
+
+<constraints>
+- Explicitly distinguish facts, inferences, and assumptions.
+- If critical information is missing, declare it rather than inventing.
+</constraints>
+
+<output_format>
+Flowing prose; 60-90 word paragraphs;
+no bullets unless a real list.
+</output_format>`;
+---
+
+<BaseLayout
+  title="aiprompting — improve any LLM prompt"
+  description="A deterministic CLI and an installable Skill that scaffold, score, and strip padding from any LLM prompt. Zero runtime dependencies, no API keys, works offline."
+>
+  <section class="relative py-20 md:py-28 -mt-12 px-6 -mx-6">
+    <div class="absolute inset-0 grid-bg opacity-50 pointer-events-none"></div>
+    <div class="relative">
+      <div class="inline-flex items-center gap-2 text-xs font-mono text-[var(--color-muted)] border border-[var(--color-border)] rounded-full px-3 py-1 mb-8">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)]"></span>
+        <span>v0.1.4 · zero runtime deps</span>
+      </div>
+      <h1 class="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05] max-w-3xl">
+        Improve any prompt.
+        <br />
+        <span class="text-[var(--color-muted)]">Before it costs you tokens.</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-[var(--color-muted)]">
+        A deterministic CLI and an installable Skill that scaffold, score, and strip padding from
+        any LLM prompt. No API keys. No round-trips. Works offline.
+      </p>
+
+      <div class="mt-10 flex flex-col sm:flex-row gap-3 max-w-md">
+        <CodeBlock code="npm i -g aiprompting" />
+      </div>
+
+      <div class="mt-4 flex gap-4 text-sm text-[var(--color-muted)]">
+        <a href="/docs" class="hover:text-[var(--color-fg)] transition-colors">Read the docs →</a>
+        <span class="text-[var(--color-border)]">·</span>
+        <a href="/skill" class="hover:text-[var(--color-fg)] transition-colors">Install as Skill →</a>
+        <span class="text-[var(--color-border)]">·</span>
+        <a href="https://github.com/matteoscurati/aiprompting" class="hover:text-[var(--color-fg)] transition-colors" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 border-t border-[var(--color-border)]">
+    <div class="flex items-baseline justify-between mb-6">
+      <h2 class="text-sm uppercase tracking-wide text-[var(--color-muted)]">A 5-word prompt → a 50-line scaffold</h2>
+      <span class="text-xs font-mono text-[var(--color-muted)]">npx aiprompting improve --prompt "..."</span>
+    </div>
+    <BeforeAfter before={heroBefore} after={heroAfter} scoreBefore={30} scoreAfter={68} />
+  </section>
+
+  <section class="py-16 grid md:grid-cols-3 gap-8 border-t border-[var(--color-border)]">
+    <div>
+      <h3 class="font-semibold mb-3 flex items-center gap-2">
+        <span class="text-[var(--color-accent)] font-mono">01</span>
+        Deterministic
+      </h3>
+      <p class="text-sm text-[var(--color-muted)] leading-relaxed">
+        Same input → same output. No LLM round-trips, no API keys, no surprises in CI. Drop it in a
+        pre-commit hook or a CI gate without spending a cent.
+      </p>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-3 flex items-center gap-2">
+        <span class="text-[var(--color-accent)] font-mono">02</span>
+        Universal
+      </h3>
+      <p class="text-sm text-[var(--color-muted)] leading-relaxed">
+        Works as a CLI, a TypeScript library, and an installable Skill in Claude Code, Codex CLI,
+        Cursor, Gemini CLI, and ~30 other agent hosts that adopted the Agent Skills standard.
+      </p>
+    </div>
+    <div>
+      <h3 class="font-semibold mb-3 flex items-center gap-2">
+        <span class="text-[var(--color-accent)] font-mono">03</span>
+        Honest
+      </h3>
+      <p class="text-sm text-[var(--color-muted)] leading-relaxed">
+        Heuristic 0–100 score with per-category rationale. No "AI-powered" hype, no measured-gain
+        claims without test data. The numbers are estimates and we say so.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 border-t border-[var(--color-border)]">
+    <h2 class="text-2xl font-semibold mb-2">Try it now</h2>
+    <p class="text-[var(--color-muted)] mb-6 max-w-2xl">
+      No install, no signup. Pipe stdin, read a file, or pass <code class="font-mono text-[var(--color-fg)]">--prompt</code> directly.
+    </p>
+    <div class="space-y-3">
+      <CodeBlock code={`npx aiprompting improve --prompt "help me write something" --mode diagnostic`} />
+      <CodeBlock code={`echo "help me debug this" | npx aiprompting improve --target claude`} />
+      <CodeBlock code={`npx aiprompting improve --file ./prompt.md --mode compact --token-budget minimal`} />
+    </div>
+  </section>
+
+  <section class="py-16 border-t border-[var(--color-border)]">
+    <h2 class="text-2xl font-semibold mb-2">Not what you think it is</h2>
+    <p class="text-[var(--color-muted)] mb-6 max-w-2xl">
+      aiprompting runs <em>before</em> the LLM. It is not observability, not a prompt registry, not
+      a chat wrapper.
+    </p>
+    <div class="grid md:grid-cols-2 gap-px bg-[var(--color-border)] rounded-lg overflow-hidden border border-[var(--color-border)]">
+      <div class="bg-[var(--color-subtle)] p-5">
+        <h3 class="font-mono text-xs uppercase tracking-wide text-[var(--color-muted)] mb-3">What it is</h3>
+        <ul class="space-y-2 text-sm">
+          <li class="flex gap-2"><span class="text-[var(--color-accent)]">→</span> A deterministic prompt linter + scaffolder.</li>
+          <li class="flex gap-2"><span class="text-[var(--color-accent)]">→</span> A 0–100 quality estimate with rationale.</li>
+          <li class="flex gap-2"><span class="text-[var(--color-accent)]">→</span> A Skill that runs inside any compatible agent.</li>
+          <li class="flex gap-2"><span class="text-[var(--color-accent)]">→</span> A CI gate for prompt regressions.</li>
+        </ul>
+      </div>
+      <div class="bg-[var(--color-subtle)] p-5">
+        <h3 class="font-mono text-xs uppercase tracking-wide text-[var(--color-muted)] mb-3">What it isn't</h3>
+        <ul class="space-y-2 text-sm text-[var(--color-muted)]">
+          <li class="flex gap-2"><span>×</span> An observability platform (try Langfuse, PromptLayer).</li>
+          <li class="flex gap-2"><span>×</span> A prompt versioning service (try PromptHub).</li>
+          <li class="flex gap-2"><span>×</span> A chat interface or playground.</li>
+          <li class="flex gap-2"><span>×</span> A measured-gain benchmark — scores are heuristic.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

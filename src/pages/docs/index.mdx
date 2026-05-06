@@ -1,0 +1,100 @@
+---
+layout: ../../layouts/BaseLayout.astro
+title: 'Docs · aiprompting'
+description: 'Quickstart, CLI reference, library API, output modes, and the 100-point rubric breakdown for aiprompting.'
+path: '/docs'
+---
+
+import CodeBlock from '../../components/CodeBlock.astro';
+
+# Documentation
+
+`aiprompting` ships in two layers: a **Skill** consumed by any compatible agent host, and a
+deterministic **CLI** you can run locally or in CI. They are independent — pick whichever fits.
+
+## Quickstart (CLI)
+
+<CodeBlock code="npm i -g aiprompting" />
+
+Once installed:
+
+<CodeBlock code={`aiprompting improve --prompt "help me write a release note"`} />
+
+No flags, no signup, no API keys. The CLI reads stdin if you don't pass `--prompt` or `--file`,
+which means you can pipe anything into it.
+
+## CLI reference
+
+| Flag | Type | Default | Description |
+|---|---|---|---|
+| `--prompt <text>` | string | — | Prompt body to improve. Mutually exclusive with `--file`. |
+| `--file <path>` | path | — | Read the prompt from a file. |
+| `--mode <name>` | enum | `standard` | `final_only` / `compact` / `standard` / `diagnostic`. |
+| `--target <agent>` | enum | inferred | `claude` / `openai` / `gemini` / `local` / `coding-agent` / `research-agent` / `tool-agent`. |
+| `--task <type>` | enum | inferred | Force a task type (research, writing, coding, …). |
+| `--language <code>` | enum | auto | `it` / `en`. Forces the output language. |
+| `--audience "<text>"` | string | — | Audience descriptor injected into `<context>`. |
+| `--token-budget <level>` | enum | `balanced` | `minimal` / `balanced` / `generous`. |
+| `--clarify <policy>` | enum | `auto` | `auto` / `always` / `never`. |
+| `--no-score` | flag | off | Skip the 0–100 score in the output. |
+| `--no-rationale` | flag | off | Hide per-category rationale in `diagnostic` mode. |
+| `doctor` | subcommand | — | Runs installation + health checks. |
+| `--help`, `--version` | flags | — | Standard. |
+
+## Library API
+
+```ts
+import { improvePrompt, scorePrompt } from 'aiprompting';
+
+const result = improvePrompt({
+  originalPrompt: 'help me write a release note',
+  mode: 'standard',
+  language: 'en'
+});
+
+console.log(result.improvedPrompt);
+console.log(result.score.before, '→', result.score.after);
+```
+
+`improvePrompt` is pure: same input → same output. No network, no global state. Safe to use in CI.
+
+## Output modes
+
+- `final_only` — just the improved prompt body. Useful for piping into another tool.
+- `compact` — improved prompt + one-line summary. Good default for chat.
+- `standard` — improved prompt + what changed + estimated impact + assumptions.
+- `diagnostic` — everything in `standard` plus the per-category rubric breakdown.
+
+## The 100-point rubric
+
+Nine heuristic categories. Numbers are estimates, not measured gains.
+
+| Category | Weight | What it measures |
+|---|---|---|
+| Intent clarity | 15 | Imperative verb + concrete noun, unambiguous outcome. |
+| Context sufficiency | 15 | Audience, working state, dependencies, constraints. |
+| Task decomposition | 10 | Numbered steps, clear sub-tasks, no run-on instructions. |
+| Constraint specificity | 10 | Quantifiers, must/never, format names, hard limits. |
+| Output format clarity | 15 | Explicit shape: schema, file paths, markdown structure. |
+| Tool/source instructions | 10 | What to call, what to cite, what to verify. |
+| Robustness vs hallucination | 10 | "Do not invent", "if unknown declare it", citation rules. |
+| Token efficiency | 10 | Padding stripped, repetition removed. |
+| Evaluation criteria | 5 | Acceptance bullets, verifiable success conditions. |
+
+Full breakdown lives in
+[`references/prompt-quality-rubric.md`](https://github.com/matteoscurati/aiprompting/blob/main/aiprompting/references/prompt-quality-rubric.md).
+
+## Health check
+
+If anything looks off, run:
+
+<CodeBlock code="aiprompting doctor" />
+
+You should see `Status: OK` plus seven green checks. If you see a red mark, the message tells you
+how to fix it.
+
+## What's next
+
+- Install it as a Skill in [your agent host](/skill).
+- Browse [worked examples](/examples).
+- Read the [changelog](/changelog).

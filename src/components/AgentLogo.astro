@@ -1,0 +1,31 @@
+---
+interface Props {
+  name: string;
+  supported: 'native' | 'adapter' | 'none';
+  note?: string;
+}
+const { name, supported, note } = Astro.props;
+
+const icon: Record<Props['supported'], string> = {
+  native: '✓',
+  adapter: '~',
+  none: '✗'
+};
+const tone: Record<Props['supported'], string> = {
+  native: 'text-[var(--color-accent)]',
+  adapter: 'text-yellow-300',
+  none: 'text-red-400'
+};
+---
+
+<div
+  class="flex items-center justify-between border border-[var(--color-border)] rounded px-3 py-2.5 bg-[var(--color-subtle)]"
+>
+  <div class="flex flex-col">
+    <span class="font-mono text-sm">{name}</span>
+    {note && <span class="text-xs text-[var(--color-muted)] mt-0.5">{note}</span>}
+  </div>
+  <span class={`font-mono text-base ${tone[supported]}`} aria-label={`Support: ${supported}`}>
+    {icon[supported]}
+  </span>
+</div>

@@ -1,0 +1,104 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+}
+
+const { title, description, path = '/' } = Astro.props;
+const canonical = new URL(path, Astro.site ?? 'https://aiprompting.sh').toString();
+const ogImage = new URL('/og-image.svg', Astro.site ?? 'https://aiprompting.sh').toString();
+
+const nav = [
+  { href: '/docs', label: 'Docs' },
+  { href: '/skill', label: 'Skill' },
+  { href: '/examples', label: 'Examples' },
+  { href: '/changelog', label: 'Changelog' }
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="aiprompting" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'aiprompting',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Cross-platform',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        url: 'https://aiprompting.sh',
+        license: 'https://opensource.org/licenses/MIT'
+      })}
+    />
+  </head>
+  <body>
+    <header class="border-b border-[var(--color-border)] sticky top-0 z-10 backdrop-blur bg-[color:rgb(10_10_10/0.85)]">
+      <nav class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+        <a href="/" class="font-mono font-semibold tracking-tight flex items-center gap-2">
+          <span class="text-[var(--color-accent)]">a</span>
+          <span>aiprompting</span>
+        </a>
+        <ul class="flex gap-6 text-sm">
+          {nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-[var(--color-muted)] hover:text-[var(--color-fg)] transition-colors"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a
+              href="https://github.com/matteoscurati/aiprompting"
+              class="text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors"
+              rel="noopener"
+            >
+              GitHub →
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-12">
+      <slot />
+    </main>
+
+    <footer class="border-t border-[var(--color-border)] mt-24">
+      <div class="max-w-5xl mx-auto px-6 py-8 text-sm text-[var(--color-muted)] flex flex-col sm:flex-row justify-between gap-3">
+        <span>
+          Code: <a href="https://opensource.org/licenses/MIT" class="hover:text-[var(--color-fg)]">MIT</a>
+          · Content: <a href="https://creativecommons.org/licenses/by/4.0/" class="hover:text-[var(--color-fg)]">CC BY 4.0</a>
+        </span>
+        <span class="font-mono">v0.1.4</span>
+      </div>
+    </footer>
+  </body>
+</html>
