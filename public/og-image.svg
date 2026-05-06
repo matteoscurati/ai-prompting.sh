@@ -1,9 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
   <rect width="1200" height="630" fill="#0a0a0a"/>
   <g font-family="ui-monospace, 'SF Mono', Menlo, monospace">
-    <text x="80" y="180" font-size="44" fill="#888888">aiprompting</text>
-    <text x="80" y="320" font-size="76" font-weight="700" fill="#ededed">Improve any prompt.</text>
-    <text x="80" y="410" font-size="76" font-weight="700" fill="#00ff9d">Before it costs you tokens.</text>
-    <text x="80" y="520" font-size="28" fill="#888888">npm i -g aiprompting · MIT · zero runtime deps</text>
+    <text x="80" y="160" font-size="36" fill="#888888">aiprompting</text>
+    <text x="80" y="300" font-size="76" font-weight="700" fill="#ededed">Improve any prompt.</text>
+    <text x="80" y="390" font-size="76" font-weight="700" fill="#00ff9d">Inside your agent.</text>
+    <text x="80" y="500" font-size="26" fill="#888888">Agent Skill · Claude Code · Codex CLI · Cursor · Gemini CLI</text>
+    <text x="80" y="540" font-size="22" fill="#666666">npm i -g aiprompting · MIT · zero runtime deps</text>
   </g>
 </svg>
