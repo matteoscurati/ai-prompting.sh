@@ -121,17 +121,21 @@ The site uses **Umami Cloud** (EU region) when enabled: no cookies, no
 fingerprinting, IP hashed with a daily-rotating salt and discarded. See
 [`/privacy`](https://ai-prompting.sh/privacy) for the full policy.
 
+The analytics script and ingest endpoint are served from a first-party
+subdomain (`analytics.ai-prompting.sh`) via a small **Cloudflare Worker
+proxy** so ad-blockers (uBlock, Brave) don't drop them. Setup and deploy
+instructions for the proxy live in [`worker/README.md`](./worker/README.md).
+
 To enable on production:
 
 1. Create a website on [cloud.umami.is](https://cloud.umami.is), region **EU**.
-2. Add a `CNAME analytics → cloud.umami.is` in Cloudflare DNS, **DNS-only**
-   (grey cloud — proxy off, otherwise Umami can't issue the cert).
-3. In Umami Cloud → website settings → set the custom domain
-   `analytics.ai-prompting.sh`.
-4. In Cloudflare Pages → project → Settings → Environment variables (Production):
+2. Set the website's `Domain` field to `ai-prompting.sh`. Copy the **Website ID**.
+3. Deploy the Cloudflare Worker proxy — see [`worker/README.md`](./worker/README.md).
+4. In Cloudflare Pages → project → Settings → Variables and Secrets (Production):
    - `PUBLIC_UMAMI_WEBSITE_ID` = the website ID from Umami
    - `PUBLIC_UMAMI_SCRIPT_URL` = `https://analytics.ai-prompting.sh/script.js`
-5. Redeploy. The script is loaded only when both vars are present.
+5. Redeploy the Pages project. The script tag is rendered only when both
+   vars are present.
 
 To disable, unset either variable and redeploy. See `.env.example` for the
 full reference.
