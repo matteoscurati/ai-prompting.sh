@@ -111,6 +111,31 @@ Node version and applies sensible cache rules out of the box.
   branch, add a deploy job to `.github/workflows/ci.yml` that pushes `dist/`
   there. No automatic preview branches.
 
+## Analytics
+
+Analytics are **off by default** and gated behind environment variables, so
+local dev, PR previews, and any deploy that doesn't opt in ship zero
+tracking code.
+
+The site uses **Umami Cloud** (EU region) when enabled: no cookies, no
+fingerprinting, IP hashed with a daily-rotating salt and discarded. See
+[`/privacy`](https://ai-prompting.sh/privacy) for the full policy.
+
+To enable on production:
+
+1. Create a website on [cloud.umami.is](https://cloud.umami.is), region **EU**.
+2. Add a `CNAME analytics → cloud.umami.is` in Cloudflare DNS, **DNS-only**
+   (grey cloud — proxy off, otherwise Umami can't issue the cert).
+3. In Umami Cloud → website settings → set the custom domain
+   `analytics.ai-prompting.sh`.
+4. In Cloudflare Pages → project → Settings → Environment variables (Production):
+   - `PUBLIC_UMAMI_WEBSITE_ID` = the website ID from Umami
+   - `PUBLIC_UMAMI_SCRIPT_URL` = `https://analytics.ai-prompting.sh/script.js`
+5. Redeploy. The script is loaded only when both vars are present.
+
+To disable, unset either variable and redeploy. See `.env.example` for the
+full reference.
+
 ## Performance budget
 
 Enforced by reviewer + CI (when budgets are added):

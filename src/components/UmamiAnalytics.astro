@@ -1,0 +1,18 @@
+---
+// Privacy-friendly analytics via Umami Cloud (EU region).
+// Renders nothing unless both env vars are set, so analytics stay off by
+// default in dev, in PR previews, and on any deploy that doesn't opt in.
+//
+// To enable: set PUBLIC_UMAMI_WEBSITE_ID and PUBLIC_UMAMI_SCRIPT_URL in the
+// host's environment (Cloudflare Pages → Settings → Environment variables).
+// See `.env.example` for the values.
+const websiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
+const scriptUrl = import.meta.env.PUBLIC_UMAMI_SCRIPT_URL;
+const enabled = Boolean(websiteId && scriptUrl);
+---
+
+{
+  enabled && (
+    <script is:inline async defer src={scriptUrl} data-website-id={websiteId} />
+  )
+}

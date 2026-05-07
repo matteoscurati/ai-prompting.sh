@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import UmamiAnalytics from '../components/UmamiAnalytics.astro';
 
 interface PageMeta {
   title?: string;
@@ -114,6 +115,8 @@ const nav = [
         />
       )
     }
+
+    <UmamiAnalytics />
   </head>
   <body>
     <header class="border-b border-[var(--color-border)] sticky top-0 z-10 backdrop-blur bg-[color:rgb(10_10_10/0.85)]">
@@ -155,6 +158,7 @@ const nav = [
         <span>
           Code: <a href="https://opensource.org/licenses/MIT" class="hover:text-[var(--color-fg)]">MIT</a>
           · Content: <a href="https://creativecommons.org/licenses/by/4.0/" class="hover:text-[var(--color-fg)]">CC BY 4.0</a>
+          · <a href="/privacy" class="hover:text-[var(--color-fg)]">Privacy</a>
         </span>
         <span class="font-mono">v0.1.6</span>
       </div>
