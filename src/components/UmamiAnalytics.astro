@@ -3,16 +3,29 @@
 // Renders nothing unless both env vars are set, so analytics stay off by
 // default in dev, in PR previews, and on any deploy that doesn't opt in.
 //
-// To enable: set PUBLIC_UMAMI_WEBSITE_ID and PUBLIC_UMAMI_SCRIPT_URL in the
-// host's environment (Cloudflare Pages → Settings → Environment variables).
-// See `.env.example` for the values.
+// To enable: set PUBLIC_UMAMI_WEBSITE_ID and PUBLIC_UMAMI_SCRIPT_URL as
+// build variables on the site's Cloudflare Worker (`ai-prompting-sh`)
+// → Settings → Build → Build variables. See `.env.example`.
+//
+// Both /script.js and /api/send go through the Worker proxy at
+// `analytics.ai-prompting.sh` so ad-blockers can't drop events.
+// `data-host-url` is what tells Umami's script to POST events to the
+// proxy origin instead of the hardcoded `api-gateway.umami.dev`.
 const websiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 const scriptUrl = import.meta.env.PUBLIC_UMAMI_SCRIPT_URL;
 const enabled = Boolean(websiteId && scriptUrl);
+const hostUrl = enabled ? new URL(scriptUrl).origin : '';
 ---
 
 {
   enabled && (
-    <script is:inline async defer src={scriptUrl} data-website-id={websiteId} />
+    <script
+      is:inline
+      async
+      defer
+      src={scriptUrl}
+      data-website-id={websiteId}
+      data-host-url={hostUrl}
+    />
   )
 }
