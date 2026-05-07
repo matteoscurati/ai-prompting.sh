@@ -74,32 +74,39 @@ Prettier with `prettier-plugin-astro`.
 
 ## Deploy
 
-The site is a static export. **Cloudflare Pages** is the recommended host:
-unlimited bandwidth on the free tier, edge CDN with 320+ POPs, fast builds,
-preview deploys per branch, and cookie-less analytics if you want them. The
+The site is a static export. The production deployment uses **Cloudflare
+Workers with Static Assets** (the unified replacement for Cloudflare Pages
+that Cloudflare is rolling out to most accounts). Free tier: unlimited
+bandwidth, 320+ edge POPs, ~30s builds, preview deploys per branch. The
 repo ships `.nvmrc` and `public/_headers` so the platform picks the right
 Node version and applies sensible cache rules out of the box.
 
-### Cloudflare Pages — first-time setup
+### Cloudflare Workers (Static Assets) — first-time setup
 
 1. **Push the repo to GitHub** (one-time):
    ```bash
    gh repo create matteoscurati/ai-prompting.sh --public --source=. --push
    ```
-2. **Create a Cloudflare Pages project**:
-   dash.cloudflare.com → Workers & Pages → Create → Pages → Connect to Git →
-   pick `matteoscurati/ai-prompting.sh`.
+2. **Create a Worker connected to Git**:
+   dash.cloudflare.com → Workers & Pages → Create → Connect to Git → pick
+   `matteoscurati/ai-prompting.sh`. The dashboard names the Worker
+   `ai-prompting-sh` (Workers names can't contain dots, so the domain dot
+   becomes a hyphen).
 3. **Build settings** (Cloudflare auto-detects most of these):
    - Framework preset: **Astro**
    - Build command: `npm run build`
    - Build output directory: `dist`
    - Root directory: leave empty
-   - Environment variables: none required
 4. **Save and Deploy.** The first build runs `npm ci && npm run build` and
    takes ~30s. Every subsequent push to `main` auto-deploys; PRs get preview
    URLs.
-5. **Custom domain**: Project → Custom domains → Set up. Add `ai-prompting.sh`
-   plus the `www.ai-prompting.sh` redirect. SSL is automatic.
+5. **Custom domain**: Worker → Settings → Domains & Routes → Add Custom
+   Domain → `ai-prompting.sh`. SSL is automatic. Add `www.ai-prompting.sh`
+   as a redirect from the same panel if desired.
+
+> Note: existing accounts may still have a "Cloudflare Pages" project type
+> in the dashboard. The setup is equivalent — just use Pages instead of
+> Workers in step 2. Build settings and behavior are identical.
 
 ### Other hosts (also work)
 
@@ -131,11 +138,15 @@ To enable on production:
 1. Create a website on [cloud.umami.is](https://cloud.umami.is), region **EU**.
 2. Set the website's `Domain` field to `ai-prompting.sh`. Copy the **Website ID**.
 3. Deploy the Cloudflare Worker proxy — see [`worker/README.md`](./worker/README.md).
-4. In Cloudflare Pages → project → Settings → Variables and Secrets (Production):
+4. In the site Worker (`ai-prompting-sh`) → Settings → **Build** → **Build
+   variables** (Production scope, NOT "Variables and Secrets" — those are
+   runtime-only and Astro can't read them at build time):
    - `PUBLIC_UMAMI_WEBSITE_ID` = the website ID from Umami
    - `PUBLIC_UMAMI_SCRIPT_URL` = `https://analytics.ai-prompting.sh/script.js`
-5. Redeploy the Pages project. The script tag is rendered only when both
-   vars are present.
+5. Trigger a new deploy (push any commit, or use Deployments → Retry).
+   Build variables are read by `astro build` when it inlines
+   `import.meta.env.PUBLIC_*` into the static bundle. The script tag
+   appears in HTML only when both vars are set.
 
 To disable, unset either variable and redeploy. See `.env.example` for the
 full reference.

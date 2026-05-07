@@ -9,7 +9,7 @@
   // otherwise wrangler refuses to create the route.
   "routes": [
     {
-      "pattern": "analytics.ai-prompting.sh/*",
+      "pattern": "analytics.ai-prompting.sh",
       "custom_domain": true
     }
   ],
