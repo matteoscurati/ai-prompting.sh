@@ -7,7 +7,7 @@ path: '/privacy'
 
 # Privacy
 
-_Last updated: 2026-05-07._
+_Last updated: 2026-05-07 (revised to disclose the analytics proxy and retention period)._
 
 This site uses **Umami Cloud** (EU region) for privacy-friendly analytics.
 No cookies, no fingerprinting, no cross-site tracking, no advertising. You
@@ -42,12 +42,39 @@ they can be improved.
 processing is minimal, anonymized, and reasonably expected of a public
 website.
 
+## How requests flow
+
+The analytics script and the event-ingest endpoint are both served from
+the first-party subdomain `analytics.ai-prompting.sh`. That subdomain is
+fronted by a small **Cloudflare Worker** (operated by us, source code at
+[`worker/`](https://github.com/matteoscurati/ai-prompting.sh/tree/main/worker))
+that forwards requests to Umami Cloud unchanged. The Worker:
+
+- does not log or persist requests
+- does not modify the script or the events
+- forwards your IP address to Umami via `X-Forwarded-For` so Umami's
+  daily-salt hashing still works (and Umami still discards the IP after
+  hashing)
+
+Cloudflare, as the underlying infrastructure provider, processes
+minimal request metadata (IP, user agent, timestamp) for security and
+rate limiting. See [Cloudflare's privacy
+policy](https://www.cloudflare.com/privacypolicy/).
+
 ## Where the data is stored
 
 Analytics are processed by **Umami Software, Inc.** (Delaware, USA) in
 their **EU region** (Frankfurt, Germany). EU customer data does not leave
 the EU under their region selection. A Data Processing Agreement is in
 place between us and Umami.
+
+## How long data is kept
+
+Aggregated analytics events (page views, referrer, country, browser
+family, screen size category) are retained in Umami Cloud for **up to 12
+months**, after which they are automatically deleted. The deduplication
+hash described above is reset every 24 hours and is never persisted as a
+user identifier.
 
 ## What this site does not do
 
@@ -59,10 +86,10 @@ place between us and Umami.
 
 ## Hosting
 
-The site is served by **Cloudflare Pages** (Cloudflare, Inc., USA).
-Cloudflare may process minimal request metadata (IP, user agent,
-timestamp) for security, caching, and rate limiting. See [Cloudflare's
-privacy policy](https://www.cloudflare.com/privacypolicy/).
+The site is served by **Cloudflare Workers (Static Assets)** on
+Cloudflare's network (Cloudflare, Inc., USA), with EU edge POPs serving
+EU traffic. Cloudflare's processing is described in the previous
+section.
 
 ## External links
 
