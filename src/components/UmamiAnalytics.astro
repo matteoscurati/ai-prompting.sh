@@ -11,6 +11,11 @@
 // `analytics.ai-prompting.sh` so ad-blockers can't drop events.
 // `data-host-url` is what tells Umami's script to POST events to the
 // proxy origin instead of the hardcoded `api-gateway.umami.dev`.
+//
+// `data-do-not-track="true"` makes the script honor `navigator.doNotTrack`.
+// Umami's default ignores DNT; we opt in to respect it as a courtesy to
+// privacy-conscious visitors and to align with the privacy policy's
+// stated opt-out methods. See docs.umami.is/docs/tracker-configuration.
 const websiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 const scriptUrl = import.meta.env.PUBLIC_UMAMI_SCRIPT_URL;
 const enabled = Boolean(websiteId && scriptUrl);
@@ -26,6 +31,7 @@ const hostUrl = enabled ? new URL(scriptUrl).origin : '';
       src={scriptUrl}
       data-website-id={websiteId}
       data-host-url={hostUrl}
+      data-do-not-track="true"
     />
   )
 }
