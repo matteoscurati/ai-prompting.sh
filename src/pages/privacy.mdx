@@ -71,10 +71,11 @@ place between us and Umami.
 ## How long data is kept
 
 Aggregated analytics events (page views, referrer, country, browser
-family, screen size category) are retained in Umami Cloud for **up to 12
-months**, after which they are automatically deleted. The deduplication
-hash described above is reset every 24 hours and is never persisted as a
-user identifier.
+family, screen size category) are retained in Umami Cloud for **up to 6
+months**, after which they are automatically deleted. This matches the
+default retention of Umami Cloud's Hobby tier, which is the plan we use.
+The deduplication hash described above is reset every 24 hours and is
+never persisted as a user identifier.
 
 ## What this site does not do
 
